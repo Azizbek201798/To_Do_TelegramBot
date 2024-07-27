@@ -11,7 +11,7 @@ Yet another Todo app. This application allows users to manage their tasks effici
 ## Installation
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/rustam-swe/todo-app.git
+    git clone https://github.com/Azizbek201798/To_Do_TelegramBot.git
     cd todo-app
     ```
 
@@ -36,7 +36,7 @@ Yet another Todo app. This application allows users to manage their tasks effici
 ### Web Interface
 1. **Start a local PHP server:**
     ```sh
-    php -S localhost:9090
+    php -S localhost:8080
     ```
 2. **Open your browser and navigate to [http://localhost:9090](http://localhost:9090).**
 
