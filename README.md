@@ -11,7 +11,7 @@ Yet another Todo app. This application allows users to manage their tasks effici
 ## Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/rustam-swe/todo-app.git
+   git clone git@github.com:Azizbek201798/To_Do_TelegramBot.git
    cd todo-app
 Install dependencies using Composer:
 sh
