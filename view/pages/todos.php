@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-$task     = new Task(); // FIXME: Variable name collision
+$task     = new Task();
 $todoList = $task->getAll();
+
 ?>
 
 <div class="list-group list-group-flush">

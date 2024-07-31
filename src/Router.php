@@ -12,6 +12,12 @@ class Router
         $this->updates = json_decode(file_get_contents('php://input'));
     }
 
+    public function get($path,$callback):void{
+        if($_SERVER['REQUEST_METHOD'] === 'GET' && $_SERVER['REQUEST_URI'] === $path){
+            $callback();
+        }
+    }
+
     public function isApiCall()
     {
         $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
