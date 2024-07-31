@@ -1,57 +1,73 @@
 <?php
 
 declare(strict_types=1);
-require 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 $router = new Router();
-$db = DB::connect();
-$todo = new Todo($db);
-$requestMethod = $_SERVER['REQUEST_METHOD'];
+$task   = new Task();
 
-if($router->isApiCall()){
-
-    if($requestMethod == 'GET'){
-        $router->sendResponse($todo->getTodos());
-        return;
-    } // DONE;
-    
-    if($requestMethod == 'POST'){
-        if(!isset($router->getUpdates()->text)){
-            $router->sendResponse([
-                'message' => 'text is not found',
-                'code' => 403,
-            ]);
-            return;
-        }
-
-        $todo->addTodo($router->getUpdates()->text);
-        $res = $todo ? "Added to database" : "Something went wrong";
-        $router->sendResponse($res);
-        return;        
-    } // DONE;
-
-    if($requestMethod == 'PATCH'){
-        $id = $router->getUpdates()->taskId;
-        if(!isset($id) && $todo->checkId($id)){
-            $router->sendResponse([
-                'message' => 'Id not found',
-                'code' => 403,
-            ]);
-        }
-        $todo->changeStatus($id);
-        return;
-    }   // DONE;
-
-    if($requestMethod == 'DELETE'){
-        $id = $router->getUpdates()->taskId;
-        if(!$id){
-            $router->sendResponse([
-                'message' => 'id not found',
-                'code' => 403,
-            ]);
-        }
-        $todo->deleteTodo($id);
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if ($router->getResourceId()) {
+        $router->sendResponse(
+            $task->getTask(
+                $router->getResourceId()
+            )
+        );
         return;
     }
-    // DONE;
+    $router->sendResponse($task->getAll());
+    return;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $newTask      = $task->add($router->getUpdates()->text, 35);
+    $responseText = $newTask ? 'New task has been added' : 'Something went wrong';
+    $router->sendResponse($responseText);
+
+    return;
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'PATCH') {
+    $requestData = $router->getUpdates();
+
+    if (isset($requestData->action) && isset($requestData->id)) {
+        $id = (int) $requestData->id;
+
+        if ($requestData->action === 'complete') {
+            $success = $task->complete($id);
+            $responseText = $success ? 'Task marked as completed' : 'Failed to complete task';
+        } elseif ($requestData->action === 'uncompleted') {
+            $success = $task->uncompleted($id);
+            $responseText = $success ? 'Task marked as uncompleted' : 'Failed to mark task as uncompleted';
+        } else {
+            $responseText = 'Invalid action specified';
+        }
+
+        $router->sendResponse($responseText);
+        return;
+    } else {
+        $router->sendResponse('Action and ID parameters are required for PATCH request');
+        return;
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    $requestData = $router->getUpdates();
+
+    if (isset($requestData->id)) {
+        $id = (int) $requestData->id;
+        $success = $task->delete($id);
+
+        if ($success) {
+            $responseText = 'Task deleted successfully';
+        } else {
+            $responseText = 'Failed to delete task';
+        }
+
+        $router->sendResponse($responseText);
+        return;
+    } else {
+        $router->sendResponse('ID parameter is required for DELETE request');
+        return;
+    }
 }

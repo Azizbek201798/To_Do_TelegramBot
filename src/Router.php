@@ -1,39 +1,52 @@
 <?php
 
-class Router{
-    public $updates;
-    public function __construct(){
-        $this->updates = json_decode(file_get_contents("php://input"));
+declare(strict_types=1);
+require_once "vendor/autoload.php";
+
+class Router
+{
+    protected object|null $updates;
+
+    public function __construct()
+    {
+        $this->updates = json_decode(file_get_contents('php://input'));
     }
 
     public function isApiCall()
     {
-        $url = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
-        $path = explode('/',$url);
-        return array_search('api',$path);
+        $uri  = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $path = explode('/', $uri);
+
+        return array_search('api', $path);
     }
 
-    public function getResourceId()
+    public function getResourceId(): false|int
     {
-        $url = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
-        $path = explode('/',$url);
+        $uri        = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $path       = explode('/', $uri);
         $resourceId = $path[count($path) - 1];
-        return is_numeric($resourceId ? (int)$resourceId : false);
+
+        return is_numeric($resourceId) ? (int) $resourceId : false;
     }
 
-    public function isTelegramUpdate(){
-        if(isset($this->updates->update_id)){
+    public function isTelegramUpdate(): bool
+    {
+        if (isset($this->updates->update_id)) {
             return true;
         }
+
         return false;
     }
 
-    public function getUpdates(){
-        return $this->updates;
+    public function sendResponse($data): void
+    {
+        header("Content-Type: application/json; charset=UTF-8");
+
+        echo json_encode($data);
     }
 
-    public function sendResponse($data){
-        header("Content-Type: application/json; charset=UTF-8");
-        echo json_encode($data);
+    public function getUpdates()
+    {
+        return $this->updates;
     }
 }

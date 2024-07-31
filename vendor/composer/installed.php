@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'azizbek/to-do',
+        'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0411e6dac81984ade7ab98c0baa70a1b72c2a31a',
+        'reference' => '337a4eb4900539e7bcbefeda4bb5a6fb8fba4bd8',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'azizbek/to-do' => array(
+        '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0411e6dac81984ade7ab98c0baa70a1b72c2a31a',
+            'reference' => '337a4eb4900539e7bcbefeda4bb5a6fb8fba4bd8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
