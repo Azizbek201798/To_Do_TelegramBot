@@ -2,7 +2,9 @@
 
 if(isset($_POST['email']) && isset($_POST['password'])){
     $user = new User();
-    echo $user->login(trim($_POST['email']),trim($_POST['password']));
+    if($user->login(trim($_POST['email']),trim($_POST['password']))){
+        header('Location: index.php?login=true');
+    };
 }
 
 ?>
@@ -27,7 +29,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
     <div class="row d-flex justify-content-center">
         <div class="col-4 form-container">
-
+            <h1>Sign-in</h1>
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1">Email address</label>

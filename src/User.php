@@ -15,25 +15,24 @@ class User{
         $user->bindParam(":email",$email);
         $user->execute();
         if(count($user->fetchAll())>0){
-            echo "User already exists";
+            return false;
         }
         $db = DB::connect();
         $stmt = $db->prepare('INSERT INTO users(email,password) VALUES(:email,:password);');
         $stmt->bindParam(':email',$email);
         $stmt->bindParam(':password',$password);
         $result = $stmt->execute();
-    
-        return $result ? "New record added with success" : "Something went wrong";
+        return $result;
     }
     
     public function login(string $email,string $password){
-        $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email and password = :password");
         $user->bindParam(":email",$email);
         $user->bindParam(":password",$password);
         $user->execute();
         if(count($user->fetchAll())>0){
-            echo "User already exists";
+            return "Email already exists";
         }
-                
+        return "Login failed";
     }
-}
+} 

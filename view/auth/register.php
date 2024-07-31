@@ -2,7 +2,9 @@
 
 if(isset($_POST['email']) && isset($_POST['password'])){
     $user = new User();
-    echo $user->create(trim($_POST['email']),trim($_POST['password']));
+    if($user->create(trim($_POST['email']),trim($_POST['password']))){
+        header('Location: index.php?register=true');
+    };
 }
 
 ?>
@@ -27,7 +29,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
 
     <div class="row d-flex justify-content-center">
         <div class="col-4 form-container">
-
+            <h1>Sign up</h1>
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1">Email address</label>
@@ -40,7 +42,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
                 </div>
-                <a href="#">Sign-in (Kirish)</a>
+                <a href="#">Sign-up (Ro'yxatdan o'tish)</a>
                 <button type="submit" class="btn btn-primary">Submit (Yuborish)</button>
             </form>
 
