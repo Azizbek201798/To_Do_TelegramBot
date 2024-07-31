@@ -50,16 +50,13 @@ class Bot
 
     public function addTask(int $chatId, string $text): void
     {
-        // Get userId from DB by chatId
         $stmt = $this->pdo->prepare("SELECT id FROM users where chat_id = :chat_id LIMIT 1");
         $stmt->execute(['chat_id' => $chatId]);
         $userId = $stmt->fetchObject()->id;
 
-        // Inserts a new task to the DB
         $task = new Task();
         $task->add($text, $userId);
 
-        // Updates users status
         $status = null;
         $stmt   = $this->pdo->prepare("UPDATE users SET status=:status WHERE chat_id = :chatId");
         $stmt->bindParam(':chatId', $chatId);
@@ -83,7 +80,6 @@ class Bot
         $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $tasks = $this->prepareTasks($tasks);
-
         if(count($tasks) === 0){
             $this->http->post('sendMessage', [
                 'form_params' => [

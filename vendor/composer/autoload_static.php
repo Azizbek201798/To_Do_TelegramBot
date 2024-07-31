@@ -257,6 +257,7 @@ class ComposerStaticInit4b55c7ef33235a0353c1b6b079f86964
         'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
         'Task' => __DIR__ . '/../..' . '/src/Task.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'User' => __DIR__ . '/../..' . '/src/User.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
