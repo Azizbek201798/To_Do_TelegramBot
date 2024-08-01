@@ -10,37 +10,34 @@ class User{
         $this->pdo = DB::connect();
     }
     
-    public function isUserExists(string $email,string $password){
+    public function isUserExists(string $email){
         $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email;");
-        $user->bindParam("email",$email);
+        $user->bindParam(":email",$email);
         $user->execute();
-        if($user->fetchAll() > 0){
-            return false;
-        }else {
+        if(count($user->fetchAll()) > 0){
+            echo "User already registered!";
             return true;
+        } else {
+            return false;
         }
     }
 
-
     public function register(string $email,string $password)    
     {
-        $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $user->bindParam(":email",$email);
-        $user->execute();
-        if(count($user->fetchAll())>0){
-            echo ("User Already exists");
-            return false;
-        }
-        $db = DB::connect();
-        $stmt = $db->prepare('INSERT INTO users(email,password) VALUES(:email,:password);');
-        $stmt->bindParam(':email',$email);
-        $stmt->bindParam(':password',$password);
-        $result = $stmt->execute();
+        $info = $this->isUserExists($email);
+        if(!$info){
+            $db = DB::connect();
+            $stmt = $db->prepare('INSERT INTO users(email,password) VALUES(:email,:password);');
+            $stmt->bindParam(':email',$email);
+            $stmt->bindParam(':password',$password);
+            $result = $stmt->execute();
         if ($result){
-            echo "User created successfully!";
+            $_SESSION['user'] = $email;
+            header("Location: /");
         } else{
             echo "Error occured!";
         }
+    }
     }
     
     public function login(string $email,string $password){
@@ -48,11 +45,12 @@ class User{
         $user->bindParam(":email",$email);
         $user->bindParam(":password",$password);
         $user->execute();
-        if(count($user->fetchAll())>0){
-            echo "Email already exists";
-            return;
+        if($user->fetch(PDO::FETCH_ASSOC)){
+            $_SESSION['user'] = $email;
+            header("Location: /");
+        }else{
+            $_SESSION['login_error'] = "Email or password is incorrect!";
+            header("Location: /");
         }
-        echo "Login failed";
-        return;
     }
 } 
