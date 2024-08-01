@@ -15,7 +15,8 @@ class User{
         $user->bindParam(":email",$email);
         $user->execute();
         if(count($user->fetchAll()) > 0){
-            echo "User already registered!";
+            $_SESSION['register_error'] = "User already registered!";
+            header("Location: /register");
             return true;
         } else {
             return false;
@@ -41,7 +42,7 @@ class User{
     }
     
     public function login(string $email,string $password){
-        $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email and password = :password");
+        $user = $this->pdo->prepare("SELECT * FROM users WHERE email = :email AND password = :password");
         $user->bindParam(":email",$email);
         $user->bindParam(":password",$password);
         $user->execute();
@@ -50,7 +51,7 @@ class User{
             header("Location: /");
         }else{
             $_SESSION['login_error'] = "Email or password is incorrect!";
-            header("Location: /");
+            header("Location: /login");
         }
     }
 } 

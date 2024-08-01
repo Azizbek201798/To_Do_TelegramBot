@@ -10,6 +10,9 @@
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-4">
+            <?php if($_SESSION['register_error']):?>
+                <?= $_SESSION['register_error'];?> 
+            <?php endif;?>
             <form action="/register" method="post">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
