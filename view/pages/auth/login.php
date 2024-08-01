@@ -1,10 +1,3 @@
-<?php
-$user = new User();
-
-// $newUser = $user->create();
-
-var_dump($newUser);
-?>
 <!doctype html>
 <html lang="en">
 <head>

@@ -1,10 +1,3 @@
-<?php
-$user = new User();
-
-// $newUser = $user->create();
-
-var_dump($newUser);
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,7 +10,7 @@ var_dump($newUser);
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-4">
-            <form action="" method="post">
+            <form action="/register" method="post">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="email" name="email">
