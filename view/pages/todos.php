@@ -22,7 +22,7 @@ $todoList = $task->getAll();
 <?php require 'view/partials/navbar.php' ?>
 <div class="container">
 <div class="row d-flex justify-content-center">
-    <h3>To Do List</h3>
+    <h3>Hello, <?php echo $_SESSION['user'] ?? 'Guest' ?> </h3>
     <?php
     if($todoList) {
         foreach ($todoList as $task) {

@@ -20,8 +20,10 @@
             <a href="/login" class="btn btn-outline-primary mx-2">Login</a>
             <a href="/register" class="btn btn-outline-success">Register</a>
         <?php else : ?>
-            <?php echo $_SESSION['user']?>    
-        <?php endif; ?>
+            <?php echo $_SESSION['user']?>
+            <a href="/logout" class="btn btn-outline-success mx-2">Log_out</a>
+            <?php header("Location: /");?>
+            <?php endif; ?>
     </div>
   </div>
 </nav>

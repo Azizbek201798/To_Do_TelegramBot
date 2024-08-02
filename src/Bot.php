@@ -137,7 +137,6 @@ class Bot
     public function handleInlineButton(int $chatId, int $data): void
     {
         $task = new Task();
-
         $currentTask = $task->getTask($data);
 
         if ($currentTask->status === 0) {
