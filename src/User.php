@@ -54,10 +54,4 @@ class User{
             header("Location: /login");
         }
     }
-
-    public function logout(){
-        session_destroy();
-        header("Location: /");
-        exit();
-    }
 } 

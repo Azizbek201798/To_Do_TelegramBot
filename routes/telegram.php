@@ -4,7 +4,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 $bot    = new Bot($_ENV['TOKEN']);
-$router = new Router();
 
 if (isset($router->getUpdates()->message)) {
     $message = $router->getUpdates()->message;
