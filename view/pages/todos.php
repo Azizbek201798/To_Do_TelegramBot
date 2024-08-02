@@ -5,6 +5,11 @@ declare(strict_types=1);
 $task     = new Task();
 $todoList = $task->getAll();
 
+if(!isset($_SESSION['user'])){
+    header("Location: /login");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +28,7 @@ $todoList = $task->getAll();
 <div class="container">
 <div class="row d-flex justify-content-center">
     <h3>To Do List</h3>
+    <h5>Hello <?php echo $_SESSION['user'] ?? 'Guest' ?></h5>
     <?php
     if($todoList) {
         foreach ($todoList as $task) {

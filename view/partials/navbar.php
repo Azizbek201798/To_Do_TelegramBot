@@ -9,18 +9,25 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        
+        <?php if(isset($_SESSION['user'])):?>
         <li class="nav-item">
           <a class="nav-link" href="/todos">Todo list</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/notes">Notes</a>
-        </li>
+        <?php endif; ?>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/notes">Notes</a>
+          </li>
       </ul>
-        <?php if(!$_SESSION['user']):?>
+        <?php if(!isset($_SESSION['user'])):?>
             <a href="/login" class="btn btn-outline-primary mx-2">Login</a>
             <a href="/register" class="btn btn-outline-success">Register</a>
         <?php else : ?>
-            <?php echo $_SESSION['user']?>    
+            <?php 
+                  echo $_SESSION['user'];
+                  echo "<a href='/logout' class='ms-2 text_underlined'>Log_out</a>";
+            ?>  
         <?php endif; ?>
     </div>
   </div>

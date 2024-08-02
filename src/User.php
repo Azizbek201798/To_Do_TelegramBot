@@ -54,4 +54,11 @@ class User{
             header("Location: /login");
         }
     }
+
+    public function logout(){
+        unset($_SESSION['user']);
+        header('Location: /');
+        exit();
+    }
+    
 } 
