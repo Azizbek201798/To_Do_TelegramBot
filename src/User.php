@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 class User{
 
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct(){
         $this->pdo = DB::connect();
@@ -23,7 +23,7 @@ class User{
         }
     }
 
-    public function register(string $email,string $password)    
+    public  function register(string $email,string $password)    
     {
         $info = $this->isUserExists($email);
         if(!$info){
